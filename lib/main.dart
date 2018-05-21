@@ -116,6 +116,9 @@ class RandomWordState extends State<RandomWords> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text("try list state"),
+        actions: <Widget>[
+          new IconButton(icon: new Icon(Icons.list), onPressed: _pushSaved),
+        ],
       ),
       body: _buildSuggestions(),
     );
@@ -151,13 +154,35 @@ class RandomWordState extends State<RandomWords> {
       ),
       onTap: () {
         setState(() {
-          if(alreadySaved){
+          if (alreadySaved) {
             _saved.remove(wp);
-          }else{
+          } else {
             _saved.add(wp);
           }
         });
       },
     );
+  }
+
+  void _pushSaved() {
+    Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
+      final tiles = _saved.map((pair) {
+        return new ListTile(
+          title: new Text(
+            pair.asPascalCase,
+            style: _biggerFont,
+          ),
+        );
+      });
+      final divided =
+          ListTile.divideTiles(context: context, tiles: tiles).toList();
+
+      return new Scaffold(
+        appBar: new AppBar(
+          title: new Text("saved items"),
+        ),
+        body: new ListView(children: divided),
+      );
+    }));
   }
 }
