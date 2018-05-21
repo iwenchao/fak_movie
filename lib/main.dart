@@ -7,7 +7,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     return new MaterialApp(
       title: 'Welcom to Flutter',
       home: new RandomWords(),
@@ -107,6 +106,7 @@ class RandomWords extends StatefulWidget {
 class RandomWordState extends State<RandomWords> {
   final _suggestions = <WordPair>[];
   final TextStyle _biggerFont = const TextStyle(fontSize: 18.0);
+  final _saved = new Set<WordPair>();
 
   @override
   Widget build(BuildContext context) {
@@ -123,27 +123,41 @@ class RandomWordState extends State<RandomWords> {
 
   Widget _buildSuggestions() {
     return new ListView.builder(
-      //给每个item的布局设置
-      padding: const EdgeInsets.all(16.0),
-      //每个item的回调，相当于adapter的getView
-      itemBuilder: (context, i) {
-        if (i.isOdd) return new Divider();
+        //给每个item的布局设置
+        padding: const EdgeInsets.all(16.0),
+        //每个item的回调，相当于adapter的getView
+        itemBuilder: (context, i) {
+          if (i.isOdd) return new Divider();
 
-        final index = i ~/ 2;
-        if (index >= _suggestions.length) {
-          _suggestions.addAll(generateWordPairs().take(10));
-        }
-        return _buildRow(_suggestions[index]);
-      }
-    );
+          final index = i ~/ 2;
+          if (index >= _suggestions.length) {
+            _suggestions.addAll(generateWordPairs().take(10));
+          }
+          return _buildRow(_suggestions[index]);
+        });
   }
 
   Widget _buildRow(WordPair wp) {
+    final alreadySaved = _saved.contains(wp);
+
     return new ListTile(
       title: new Text(
         wp.asPascalCase,
         style: _biggerFont,
       ),
+      trailing: new Icon(
+        alreadySaved ? Icons.favorite : Icons.favorite_border,
+        color: alreadySaved ? Colors.red : null,
+      ),
+      onTap: () {
+        setState(() {
+          if(alreadySaved){
+            _saved.remove(wp);
+          }else{
+            _saved.add(wp);
+          }
+        });
+      },
     );
   }
 }
