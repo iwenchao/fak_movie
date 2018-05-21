@@ -7,31 +7,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final wordPair = new WordPair.random();
 
     return new MaterialApp(
       title: 'Welcom to Flutter',
-      theme: new ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or press Run > Flutter Hot Reload in IntelliJ). Notice that the
-        // counter didn't reset back to zero; the application is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-//      home: new MyHomePage(title: 'Flutter Demo Home Page'),
-      home: new Scaffold(
-        appBar: new AppBar(
-          title: new Text("welcome my lady"),
-        ),
-        body: new Center(
-//          child: new Text("emmm , your majesty"),
-          child: new Text(wordPair.asPascalCase),
-        ),
-      ),
+      home: new RandomWords(),
     );
   }
 }
@@ -116,6 +95,55 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: new Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class RandomWords extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => new RandomWordState();
+}
+
+class RandomWordState extends State<RandomWords> {
+  final _suggestions = <WordPair>[];
+  final TextStyle _biggerFont = const TextStyle(fontSize: 18.0);
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+//    final wp = new WordPair.random();
+//    return new Text(wp.asPascalCase);
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text("try list state"),
+      ),
+      body: _buildSuggestions(),
+    );
+  }
+
+  Widget _buildSuggestions() {
+    return new ListView.builder(
+      //给每个item的布局设置
+      padding: const EdgeInsets.all(16.0),
+      //每个item的回调，相当于adapter的getView
+      itemBuilder: (context, i) {
+        if (i.isOdd) return new Divider();
+
+        final index = i ~/ 2;
+        if (index >= _suggestions.length) {
+          _suggestions.addAll(generateWordPairs().take(10));
+        }
+        return _buildRow(_suggestions[index]);
+      }
+    );
+  }
+
+  Widget _buildRow(WordPair wp) {
+    return new ListTile(
+      title: new Text(
+        wp.asPascalCase,
+        style: _biggerFont,
+      ),
     );
   }
 }
