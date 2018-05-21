@@ -9,12 +9,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Welcom to Flutter',
+      theme: new ThemeData(
+        primaryColor: Colors.red,
+      ),
       home: new RandomWords(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+
   MyHomePage({Key key, this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
@@ -173,6 +177,7 @@ class RandomWordState extends State<RandomWords> {
             style: _biggerFont,
           ),
         );
+
       });
       final divided =
           ListTile.divideTiles(context: context, tiles: tiles).toList();
