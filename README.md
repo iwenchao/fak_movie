@@ -40,8 +40,17 @@ For help getting started with Flutter, view our online
         3. GridView
         4. ListView
         5. Stack
-        6. Material Components : Card,ListTile,
+        6. Material Components : Card,ListTile,CheckBox，DropdownButton,IconButton,Switch,Radio,Slider
 
 4. [交互](https://flutterchina.club/tutorials/interactive/)
+    1. Stateful vs Stateless widgets
+        1. 需要交互的，并且根据交互产生状态变化，则Stateful
+        2. widget的state常用来保存widget的数据，一个widget对于一个state，widget更新后会产生新的widget，新的widget重新与原来的state进行绑定
+        3. 有状态的Widget，需要两个类 StatefulWidget与State；状态对象包含widget的状态和build方法；当widget状态变化时，状态对象调用setState，告诉框架重绘widget
+
+    2. 状态管理：取决于实际的需求
+        1. widget管理自己的状态
+        2. 父widget管理子widget的状态
+        3. 混搭管理
 
 
