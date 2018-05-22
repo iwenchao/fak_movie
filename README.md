@@ -33,7 +33,15 @@ For help getting started with Flutter, view our online
     1. key在构建相同类型的widget的多个实例时很有用，比如 列表
 
 3. [布局](https://flutterchina.club/tutorials/layout/)
-    1.
+    1. widgets是用于构建UI的类，用于布局和ui元素，通过简单的widget来构建复杂的widget；甚至应用本身就是一个widget
+    2. 常见的布局：
+        1. 垂直或水平排列的widget 行Row，列 Column；行列都需要子widget
+        2. Container
+        3. GridView
+        4. ListView
+        5. Stack
+        6. Material Components : Card,ListTile,
+
 4. [交互](https://flutterchina.club/tutorials/interactive/)
 
 
